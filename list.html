@@ -1,12 +1,26 @@
-<table>
-<tr>
-	<td><strong>Sender</strong></td>
-	<td><strong>Subject</strong></td>
-	<td><strong>Date</strong></td>
-</tr>
-<tr ng-repeat='message in messages'>
-	<td>{{message.sender}}</td>
-	<td><a href='#/view/{{message.id}}'>{{message.subject}}</td>
-	<td>{{message.date}}</td>
-</tr>
-</table>
+<div class="topcoat-list">
+  <h3 class="topcoat-list__header">Messages</h3>
+
+  <ul class="topcoat-list__container">
+	<li class="topcoat-list__item">
+		<table>
+			<tr>
+				<td>Sender</td>
+				<td>Subject</td>
+				<td>Date</td>
+			</tr>
+		</table>
+	</li>
+	
+	<li ng-repeat='message in messages' class="topcoat-list_container">
+		<table>
+			<tr>
+		<td>{{message.sender}}</td>
+		<td><a href='#/view/{{message.id}}'>{{message.subject}}</td>
+		<td>{{message.date}}</td>
+		</tr>
+		</table>
+	</li>
+
+  </ul>
+</div>

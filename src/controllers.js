@@ -59,10 +59,70 @@ function DetailController($scope, $routeParams) {
 }
 
 
-function HiController($scope) {
-	$scope.powitanie = hello;
-} 
+/*function HiController($scope, $http) {
+	//$scope.powitanie = Items.query();
+	//console.log(Items.query())
 
+	$http.get('http://pizg.net/slim/app/wines').success(function(data, status, headers, config) {
+		$scope.items = data;
+		//console.log(data.wine[0].country)
+		console.log($scope)
+	});
+
+} */
+
+/*function HiController($scope, Items) {
+
+
+
+	$scope.powitanie  = Items.query();
+	console.log();
+
+} */
+
+
+function HiController($scope, Source) {
+
+		
+	Source.getSource(function(data) {
+		$scope.items = data;
+	});
+
+
+	$scope.newWine =  {"region":"Bordeaux","description":"Though dense and chewy, this wine does not overpower with its finely balanced depth and structure. It is a truly luxurious experience for the\nsenses."},
+	
+	$scope.newWine.id = 999;
+	$scope.newWine.name ="Test One";
+	$scope.newWine.year = 2000;
+	$scope.newWine.grapes = "Cab Sav";
+	$scope.newWine.country = "UK";
+
+
+		//getting the data on the callback
+
+	$scope.addWine = function () {
+		//Source.deleteWine();
+		Source.addWine($scope.newWine , function() {
+			
+			Source.getSource(function(data) { $scope.items = data;});
+		
+		});
+
+	
+	};
+
+	// deletes wine by its id
+	$scope.deleteWine =  function (n) {
+		console.log(n,"whatever");
+		
+		Source.deleteWine(n, function() {  
+				
+				Source.getSource(function(data) { $scope.items = data;});
+
+		});
+	}
+
+}
 
 
 
@@ -74,3 +134,84 @@ aMailServices.directive("superman", function() {
     template: "<div> Here I am to save the day </div>"
   }
 })
+
+
+// factory services
+aMailServices.factory("Source",['$http', function($http) {
+	
+	return {
+
+		 getSource: function(callback) {
+          	var url = 'http://pizg.net/slim/app/wines';
+	          $http.get(url).success(function(data, status,header, config) {
+	             	callback(data);
+	          })
+       	},
+
+       	deleteWine: function(number, callback) {
+       		var url = 'http://pizg.net/slim/app/wines/'+number;
+       		$http.delete(url).success(function(data, status,header, config) {
+	             	callback();
+	        })
+       	}
+       	, addWine: function (d, callback) {
+       		  $http({
+            		url: 'http://pizg.net/slim/app/wines',
+            		method: "POST",
+            		data: d,
+            		headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        			}).success(function (data, status, headers, config) {
+                		//$scope.persons = data; // assign  $scope.persons here as promise is resolved here 
+                		console.log("wino jest dodane teraz");
+
+                		callback();
+                		
+            	}).error(function (data, status, headers, config) {
+                 //$scope.status = status;
+                 console.log("cos poszlo nie tak z dodaniem wina");
+            });
+
+       	}
+
+	}
+
+}])
+
+//.
+
+aMailServices.factory('Items', function() {
+		 	
+
+		 	return {
+		 		query: function() {
+		 			return [
+							{title: 'Paint pots', description: 'Pots full of paint', price: 3.95},
+							{title: 'Polka dots', description: 'Dots with polka', price: 2.95},
+							{title: 'Pebbles', description: 'Just little rocks', price: 6.95}
+					   ];
+		 		},
+		 		query2: function() {
+		 			return [
+							{title: 'Paint pots2', description: 'Pots full of paint2', price: 3.95},
+							{title: 'Polka dots2', description: 'Dots with polka2', price: 2.95},
+							{title: 'Pebble2s', description: 'Just little rocks2', price: 6.95}
+					   ];
+		 		},
+		 		queryAj: function () {
+
+		 				/*$.ajax({
+            				type: 'GET',
+            				url: 'http://pizg.net/slim/app/wines',
+            				crossdomain:true,
+            				dataType: "json", // data type of response
+            				success: function(data) {}
+        				}).done(function(data) {
+        						return data
+            					//console.log(data, "this is a response"); 
+        					}); */
+
+
+		 		}
+		 	}	
+	
+		});////

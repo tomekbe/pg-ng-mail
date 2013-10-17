@@ -1,12 +1,21 @@
 <html ng-app="AMail">
 <head>
+
+	<script src="lib/jquery-1.8.2.min.js"></script>
+
 	<script src="src/angular.min.js"></script>
 	<script src="src/controllers.js"></script>
 	<script src="phonegap.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/topcoat-mobile-dark.min.css">
 
 </head>
 <body>
-	<h1>A-Mail</h1>
+	<div class="topcoat-navigation-bar">
+	    <div class="topcoat-navigation-bar__item center full">
+	        <h1 class="topcoat-navigation-bar__title">Header</h1>
+	    </div>
+	</div>
+	
 	<div ng-view></div>
 </body>
 

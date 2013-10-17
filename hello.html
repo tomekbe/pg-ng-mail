@@ -1,4 +1,9 @@
-<h2>helll0</h2>
+<h2>~</h2>
+<p ng-repeat='item in items.wine' id={{item.id}} ng-click='deleteWine($event.srcElement.id)'> {{item.country}} &nbsp; {{item.id}} </p>
+<button ng-click="addWine()" class="topcoat-button">Add Wine</button>
 
-<p ng-repeat='item in powitanie'>{{item.a}}</p>
+<hr/>
+<h3>year:</h3><input type="text" class="topcoat-text-input" placeholder="text" value="" ng-model =newWine.year>
+<hr/>
+<h3>country:</h3><input type="text" class="topcoat-text-input" placeholder="text" value="" ng-model =newWine.country>
 <superman></superman>
